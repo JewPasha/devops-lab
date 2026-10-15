@@ -1,0 +1,21 @@
+name: DevOps Lab CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose
+        run: docker compose -f compose.yaml config -q
+
+      - name: Check homepage
+        run: test -s web/index.html
